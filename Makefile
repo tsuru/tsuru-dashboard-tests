@@ -5,4 +5,4 @@ deps:
 	@pip install -r requirements.txt
 
 test: clean deps
-	@python -m "unittest"
+	@python -m unittest discover
