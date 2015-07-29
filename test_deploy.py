@@ -10,8 +10,11 @@ class RollbackTest(unittest.TestCase):
     def setUp(self):
         self.dashboard = os.environ.get("TSURU_DASHBOARD_URL")
         self.browser = Browser()
+        self.oauth_login()
+        self.create_app()
 
     def tearDown(self):
+        self.remove_app()
         self.browser.quit()
 
     def oauth_login(self):
@@ -29,8 +32,6 @@ class RollbackTest(unittest.TestCase):
         self.browser.find_by_css(".enabled").click()
 
     def create_app(self):
-        self.oauth_login()
-
         url = "{}/apps/create/".format(self.dashboard)
         self.browser.visit(url)
 
@@ -54,3 +55,6 @@ class RollbackTest(unittest.TestCase):
         time.sleep(1)
         self.browser.find_by_css(".remove-confirmation").fill(app_name)
         self.browser.find_by_css(".btn-remove").click()
+
+    def test_deploy(self):
+        pass
